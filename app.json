@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "PrimalApp2",
+    "slug": "PrimalApp2",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "PrimalApp2"
+}
