@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "845855036415",
+    "project_id": "primal-67078",
+    "storage_bucket": "primal-67078.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845855036415:android:2130b0913ff6c70b534dca",
+        "android_client_info": {
+          "package_name": "com.primalapp2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "845855036415-o8av0rnf87krb6mugd337ap8adm78r1v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACSYGqRxCwbN_jQqDZCDxeBSgG6zAwFIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "845855036415-o8av0rnf87krb6mugd337ap8adm78r1v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

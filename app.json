@@ -5,7 +5,12 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "05bd5524-a618-442d-8a90-228071cb8748"
+      }
+    }
   },
   "name": "PrimalApp2"
 }
