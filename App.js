@@ -2,16 +2,21 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert, TextInput, Image, ImageBackground, TouchableHighlight, Dimensions, ScrollView } from 'react-native'
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import Video from 'react-native-video';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import { ReactNativeFirebase } from '@react-native-firebase/app';
+
 import { initializeApp } from 'firebase/app';
+import { collection, getDocs } from 'firebase/firestore'
+
 import Fetch from './src/Fetch';
+import { firebase } from './config';
 import FetchImage from './src/FetchImage';
 import FetchVideo from './src/FetchVideo';
 import FetchMoves from './src/FetchMoves';
-
+import BeltColourPicker from './src/BeltColourPicker'
 
 const Stack = createNativeStackNavigator();
 var Width = Dimensions.get('window').width //full width of the device
@@ -63,13 +68,27 @@ const MyStack = () => {
 //-----------------------------------------------------------
 //LoginScreen is where the user logs in using their email address and password. 
 //Once the account is found in the database and verified, the user will be moved to the home page.
-const LoginScreen = ({navigation}) => {
+const LoginScreen = () => {
   const [email, onChangeEmail] = React.useState('');
   const [password, onChangePassword] = React.useState('');
-  const [number, onChangeNumber] = React.useState('');
-  //const CoverImage = {uri: 'https://reactjs.org/logo-og.png'};
-  const CoverImage = {uri: 'https://www.nexuscombinedma.com.au/wp-content/uploads/2017/06/nexus_logo_footer-1.png'};
+  const [errorMessage, setErrorMessage] = React.useState('');
+  const navigation = useNavigation();
 
+  const handleLogin = async () => {
+    const data = await getDocs(firebase.firestore().collection('Users'));
+    const users = data.docs.map(doc => doc.data());
+    const matchedUser = users.find(
+        user => user.Email === email && user.Password === password);
+    if (matchedUser) {
+      navigation.navigate('Home', {
+        userEmail: matchedUser.Email,
+        userName: matchedUser.Name,
+        userNumberOfClasses: matchedUser.NumberOfClasses,
+      });
+    } else {
+      setErrorMessage('Invalid username or password');
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -86,6 +105,7 @@ const LoginScreen = ({navigation}) => {
             onChangeText={onChangeEmail}
             placeholder="Email Address"
             keyboardType="email-address"
+            defaultValue='jayddavis191@gmail.com'
             color='white'
             placeholderTextColor='white'
           />
@@ -95,20 +115,20 @@ const LoginScreen = ({navigation}) => {
             onChangeText={onChangePassword}
             placeholder="Password"
             keyboardType="visible-password"
+            defaultValue='test123'
             color='white'
             placeholderTextColor='white'
           />
+          {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
 
           <StatusBar style="auto" />
-          <Text style={styles.heading}></Text>
+          <Text style={styles.TextGap}></Text>
           
           <TouchableHighlight style={styles.LoginButton}
             title="Login"
             color= 'green'
             alignSelf= 'center'
-            onPress={() => 
-              navigation.navigate('Home', {user: email})
-            } >
+            onPress={handleLogin} >
             <Text style={styles.LoginText}>LOGIN</Text>
           </TouchableHighlight>
         </ImageBackground>
@@ -124,13 +144,17 @@ const HomeScreen = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
+      <BeltColourPicker
+        navigation={navigation}
+        numberOfClasses={route.params.userNumberOfClasses}
+      />
       <Fetch/>
         <Text style={styles.heading}>{route.params.user}</Text>
         <StatusBar style="auto" />
         <Button
           title="Check"
           color='red'
-          onPress={() => Alert.alert("" + route.params.user)}
+          onPress={() => Alert.alert("" + route.params.email)}
         />
         <Button
           title="Create an account"
@@ -283,6 +307,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  TextGap: {
+    paddingVertical: 20,
+  },
+
   CoverImage: {
     flex: 1, 
     justifyContent: 'center',
@@ -340,6 +368,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center', 
     borderColor: 'white', 
     padding: 8, 
+  }, 
+
+  errorText: {
+    fontSize: 15, 
+    alignSelf: 'center',
+    color: 'red', 
   }, 
 
   footerButtonsView: {

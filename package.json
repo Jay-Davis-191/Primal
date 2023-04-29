@@ -15,18 +15,20 @@
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",
     "expo": "~47.0.12",
+    "expo-av": "~13.0.3",
     "expo-dev-client": "~2.0.1",
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
     "firebase": "^9.16.0",
     "react": "18.1.0",
     "react-dom": "18.1.0",
-    "react-native": "0.70.5",
+    "react-native": "0.70.8",
     "react-native-easy-grid": "^0.2.2",
+    "react-native-picker-select": "^8.0.4",
     "react-native-video": "^5.2.1",
     "react-native-web": "~0.18.9",
     "save": "^2.9.0",
-    "expo-av": "~13.0.2"
+    "@react-native-picker/picker": "2.4.8"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
