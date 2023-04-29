@@ -79,15 +79,21 @@ const LoginScreen = () => {
     const users = data.docs.map(doc => doc.data());
     const matchedUser = users.find(
         user => user.Email === email && user.Password === password);
-    if (matchedUser) {
-      navigation.navigate('Home', {
-        userEmail: matchedUser.Email,
-        userName: matchedUser.Name,
-        userNumberOfClasses: matchedUser.NumberOfClasses,
-      });
-    } else {
-      setErrorMessage('Invalid username or password');
+    if (matchedUser.Active == true) {
+      if (matchedUser) {
+        navigation.navigate('Home', {
+          userEmail: matchedUser.Email,
+          userName: matchedUser.Name,
+          userNumberOfClasses: matchedUser.NumberOfClasses,
+        });
+      } else {
+        setErrorMessage('Invalid username or password');
+      }
     }
+    else {
+      setErrorMessage('Your account is inactive');
+    }
+
   };
 
   return (
