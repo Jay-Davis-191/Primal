@@ -17,6 +17,9 @@ import FetchImage from './src/FetchImage';
 import FetchVideo from './src/FetchVideo';
 import FetchMoves from './src/FetchMoves';
 import BeltColourPicker from './src/BeltColourPicker'
+import { selectedBeltColour } from './src/BeltColourPicker';
+import { FindBeltLevel } from './src/FindBeltLevel'
+import { FindAgeGroup } from './src/FindAgeGroup'
 
 const Stack = createNativeStackNavigator();
 var Width = Dimensions.get('window').width //full width of the device
@@ -85,6 +88,7 @@ const LoginScreen = () => {
           userEmail: matchedUser.Email,
           userName: matchedUser.Name,
           userNumberOfClasses: matchedUser.NumberOfClasses,
+          userAge: matchedUser.Age,
         });
       } else {
         setErrorMessage('Invalid username or password');
@@ -147,6 +151,8 @@ const LoginScreen = () => {
 //HomeScreen opens the home page of the app including progress status, gallery and buttons to other screens. 
 //@params route, includes the email of the user which will be used in the WHERE clause for the SQL query to find the user's information. 
 const HomeScreen = ({navigation, route}) => {
+  const ageGroup = FindAgeGroup(route.params.userAge);
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -154,6 +160,8 @@ const HomeScreen = ({navigation, route}) => {
         navigation={navigation}
         numberOfClasses={route.params.userNumberOfClasses}
       />
+      <Text style={{color: 'white', fontSize: 30}}>{route.params.userAge}</Text>
+      <Text style={{color: 'white', fontSize: 30}}>{selectedBeltColour}</Text>
       <Fetch/>
         <Text style={styles.heading}>{route.params.user}</Text>
         <StatusBar style="auto" />
@@ -174,22 +182,26 @@ const HomeScreen = ({navigation, route}) => {
             title="Fitness"
             color='green'
             style={{width: Width}}
-            onPress={() => navigation.navigate('Fitness', {user: route.params.user})}        
+            onPress={() => navigation.navigate('Fitness', { 
+              beltColour: selectedBeltColour,
+              age: ageGroup})}
           />
         </Col>
         <Col>
           <Button 
             title="Striking"
             color='green'
-            onPress={() => navigation.navigate('Striking', {user: route.params.user})} 
-          />
+            onPress={() => navigation.navigate('Striking', { 
+              beltColour: selectedBeltColour,
+              age: ageGroup})}          />
         </Col>
         <Col>
           <Button 
             title="Ground Skills"
             color='green'
-            onPress={() => navigation.navigate('GroundSkills', {user: route.params.user})}      
-          />
+            onPress={() => navigation.navigate('GroundSkills', { 
+              beltColour: selectedBeltColour,
+              age: ageGroup})}          />
         </Col>
       </Grid>
     </SafeAreaView>
@@ -201,6 +213,9 @@ const HomeScreen = ({navigation, route}) => {
 //-----------------------------------------------------------
 //FitnessScreen includes all appropriate fitness options for the user. 
  const FitnessScreen = ({navigation, route}) => {
+  const beltLevel = FindBeltLevel(route.params.beltColour);
+  //const ageGroup = FindAgeGroup(route.params.age);
+
   return (
     <SafeAreaView style={styles.container}>
     <ScrollView style={styles.scrollView}>
@@ -210,6 +225,8 @@ const HomeScreen = ({navigation, route}) => {
         <FetchMoves 
           navigation={navigation}
           chosenPage="Fitness"
+          beltLevel={selectedBeltColour}
+          ageGroup={route.params.age}
           />
       </View>
     </ScrollView>
@@ -221,6 +238,8 @@ const HomeScreen = ({navigation, route}) => {
 //-----------------------------------------------------------
 //StrikingScreen includes all appropriate striking options for the user. 
  const StrikingScreen = ({navigation, route}) => {
+  const beltLevel = FindBeltLevel(route.params.beltColour);
+
   return (
     <SafeAreaView style={styles.container}>
     <ScrollView style={styles.scrollView}>
@@ -230,6 +249,8 @@ const HomeScreen = ({navigation, route}) => {
         <FetchMoves 
           navigation={navigation}
           chosenPage="Striking"
+          beltLevel={selectedBeltColour}
+          ageGroup={route.params.age}
           />
       </View>
     </ScrollView>
@@ -240,6 +261,9 @@ const HomeScreen = ({navigation, route}) => {
 //-----------------------------------------------------------
 //GroundSkillsScreen includes all appropriate ground skills for the user. 
  const GroundSkillsScreen = ({navigation, route}) => {
+  const beltLevel = FindBeltLevel(route.params.beltColour);
+  const level = FindBeltLevel.selectedValue
+
   return (
     <SafeAreaView style={styles.container}>
     <ScrollView style={styles.scrollView}>
@@ -249,6 +273,8 @@ const HomeScreen = ({navigation, route}) => {
         <FetchMoves 
           navigation={navigation}
           chosenPage="Ground Skills"
+          beltLevel={selectedBeltColour}
+          ageGroup={route.params.age}
           />
       </View>
     </ScrollView>

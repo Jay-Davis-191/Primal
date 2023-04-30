@@ -11,12 +11,14 @@ var width = Dimensions.get('window').width //full width of the device
 var height = Dimensions.get('window').height //full height of the device
 
 
-const FetchMoves = ({navigation, chosenPage}) => {
+const FetchMoves = ({navigation, chosenPage, beltLevel, ageGroup}) => {
     const [fitnessMoves, setFitnessMoves] = useState([]);
     const [url, setUrl] = useState();
     
     useEffect(async () => {
-        const movesRef = firebase.firestore().collection('Moves').where('Category', '==', chosenPage);
+        const movesRef = firebase.firestore().collection('Moves').where('Category', '==', chosenPage).where('Class', '==', ageGroup).where('BeltColour', '==', beltLevel);  // SQL Query to retrieve moves depending on category, ageGroup, and beltLevel. 
+        // const initialRef = movesRef.where('BeltColour', '==', beltLevel)
+
         //const movesRef = firebase.firestore().collection('Moves').where('Category', '==', chosenPage).where('Sub-Category', '==', 'Mount');
         //!----IMPORTANT-------//
         //For Provisional Black Belt choice, just change the query to where.('BeltColour', '!=', 'Black'), makes every other move available;
