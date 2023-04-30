@@ -160,28 +160,16 @@ const HomeScreen = ({navigation, route}) => {
         navigation={navigation}
         numberOfClasses={route.params.userNumberOfClasses}
       />
-      <Text style={{color: 'white', fontSize: 30}}>{route.params.userAge}</Text>
-      <Text style={{color: 'white', fontSize: 30}}>{selectedBeltColour}</Text>
       <Fetch/>
         <Text style={styles.heading}>{route.params.user}</Text>
         <StatusBar style="auto" />
-        <Button
-          title="Check"
-          color='red'
-          onPress={() => Alert.alert("" + route.params.email)}
-        />
-        <Button
-          title="Create an account"
-          color='blue'
-          onPress={() => Alert.alert("" + route.params.user)}
-        />
       </View>
       <Grid style={styles.footerButtonsView}>
         <Col>
           <Button 
             title="Fitness"
             color='green'
-            style={{width: Width}}
+            style={{ width: Width }}
             onPress={() => navigation.navigate('Fitness', { 
               beltColour: selectedBeltColour,
               age: ageGroup})}

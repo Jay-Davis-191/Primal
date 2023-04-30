@@ -16,7 +16,14 @@ const FetchMoves = ({navigation, chosenPage, beltLevel, ageGroup}) => {
     const [url, setUrl] = useState();
     
     useEffect(async () => {
-        const movesRef = firebase.firestore().collection('Moves').where('Category', '==', chosenPage).where('Class', '==', ageGroup).where('BeltColour', '==', beltLevel);  // SQL Query to retrieve moves depending on category, ageGroup, and beltLevel. 
+        var movesRef = ''; 
+        if (beltLevel == "Grey") {
+            movesRef = firebase.firestore().collection('Moves').where('Category', '==', chosenPage).where('Class', '==', ageGroup).where('BeltColour', '!=', "Black").orderBy('BeltColour');  // SQL Query to retrieve moves depending on category, ageGroup, and beltLevel. 
+        }
+        else {
+            movesRef = firebase.firestore().collection('Moves').where('Category', '==', chosenPage).where('Class', '==', ageGroup).where('BeltColour', '==', beltLevel);  // SQL Query to retrieve moves depending on category, ageGroup, and beltLevel. 
+        }
+        
         // const initialRef = movesRef.where('BeltColour', '==', beltLevel)
 
         //const movesRef = firebase.firestore().collection('Moves').where('Category', '==', chosenPage).where('Sub-Category', '==', 'Mount');
