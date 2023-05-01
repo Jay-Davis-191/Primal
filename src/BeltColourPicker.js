@@ -4,6 +4,7 @@ import { Picker }  from '@react-native-picker/picker'
 import { FindBeltLevel } from './FindBeltLevel';
 var Width = Dimensions.get('window').width //full width of the device
 var selectedBeltColour = ''; 
+var pickerData = []
 
 
 // Retrieves all the necessary colours from Java. 
@@ -21,11 +22,11 @@ const colorMapping = {
  };
 
  const BeltColourPicker = ({navigation, numberOfClasses}) => {
-  let beltColour = FindBeltLevel(numberOfClasses);
-  const [selectedValue, setSelectedValue] = useState(beltColour);
+  let BELT_COLOUR = FindBeltLevel(numberOfClasses);
+  applyPickerItems(BELT_COLOUR); 
+  const [selectedValue, setSelectedValue] = useState(BELT_COLOUR);
   selectedBeltColour = selectedValue; 
 
- 
    const handleValueChange = (value) => {
      setSelectedValue(value);
    };
@@ -34,6 +35,7 @@ const colorMapping = {
      ...styles.picker,
      backgroundColor: colorMapping[selectedValue],
    };
+
  
    return (
      <Picker
@@ -41,20 +43,67 @@ const colorMapping = {
        selectedValue={selectedValue}
        onValueChange={handleValueChange}
      >
-      <Picker.Item label="White" value="White" style={{backgroundColor: 'white'}} />
-      <Picker.Item label="Orange" value="Orange" style={{backgroundColor: 'orange'}} />
-      <Picker.Item label="Yellow" value="Yellow" style={{backgroundColor: 'yellow'}} />
-      <Picker.Item label="Green" value="Green" style={{backgroundColor: 'green'}} />
-      <Picker.Item label="Purple" value="Purple" style={{backgroundColor: 'purple'}} />
-      <Picker.Item label="Blue" value="Blue" style={{backgroundColor: 'blue'}} />
-      <Picker.Item label="Brown" value="Brown" style={{backgroundColor: 'saddlebrown'}} />
-      <Picker.Item label="Red" value="Red" style={{backgroundColor: 'red'}} />
-      <Picker.Item label="Provisional Black" value="Grey" style={{backgroundColor: 'grey'}} />
-      <Picker.Item label="Black" value="Black" style={{backgroundColor: 'black' }} />
-
+     {pickerData}
      </Picker>
    );
  };
+ 
+ const applyPickerItems = (BELT_COLOUR) => {
+  pickerData = []
+  addToPickerData('White'); 
+  if (BELT_COLOUR == 'White') {
+    return pickerData; 
+  }
+  addToPickerData('Orange'); 
+  if (BELT_COLOUR == 'Orange') {
+    return pickerData; 
+  }
+  addToPickerData('Yellow'); 
+  if (BELT_COLOUR == 'Yellow') {
+    return pickerData; 
+  }
+  addToPickerData('Green'); 
+  if (BELT_COLOUR == 'Green') {
+    return pickerData; 
+  }
+  addToPickerData('Purple'); 
+  if (BELT_COLOUR == 'Purple') {
+    return pickerData; 
+  }
+  addToPickerData('Blue'); 
+  if (BELT_COLOUR == 'Blue') {
+    return pickerData; 
+  }
+  addToPickerData('Brown'); 
+  if (BELT_COLOUR == 'Brown') {
+    return pickerData; 
+  }
+  addToPickerData('Red'); 
+  if (BELT_COLOUR == 'Red') {
+    return pickerData; 
+  }
+  addToPickerData('Grey'); 
+  if (BELT_COLOUR == 'Grey') {
+    return pickerData; 
+  }
+  addToPickerData('Black'); 
+  if (BELT_COLOUR == 'Black') {
+    return pickerData; 
+  }
+ }
+
+ const addToPickerData = (colour) => {
+  let beltColourAsString = String(colour); 
+  let colourCapitalized = beltColourAsString.toLowerCase();
+  if (colour == 'Brown') {
+    pickerData.push(<Picker.Item label={colour} value={colour} style={{backgroundColor: 'saddlebrown'}} />);  
+  }
+  else {
+    pickerData.push(<Picker.Item label={colour} value={colour} style={{backgroundColor: colourCapitalized}} />);  
+  }
+  
+
+ }
 
  export default BeltColourPicker
 

@@ -8,33 +8,33 @@ function FindBeltLevel(number) {
   if (x < NUMBER_TO_PROVISIONAL_BLACK_BELT) { // Implies the student reaches the number of classes necessary for a black belt.
     switch (x) {
     case 0:
-      return 'White';
+      return "White";
     case 1: 
-      return 'Orange';
+      return "Orange";
     case 2: 
-      return 'Yellow';
+      return "Yellow";
     case 3: 
-      return 'Green';
+      return "Green";
     case 4:
-      return 'Purple';
+      return "Purple";
     case 5: 
-      return 'Blue';
+      return "Blue";
     case 6: 
-      return 'Brown';
+      return "Brown";
     case 7: 
-      return 'Red';
+      return "Red";
     default:
-      return 'White'; 
+      return "White"; 
     }
   }
   else if (8 <= x && x < 10) {
-    return 'Grey'; 
+    return "Grey"; 
   }
   else if (x >= 10) {
-    return 'Black'
+    return "Black"
   }
   else {
-    return 'Break'
+    return "Break"
   }
 }; 
 
