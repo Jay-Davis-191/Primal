@@ -81,21 +81,26 @@ const LoginScreen = () => {
     const data = await getDocs(firebase.firestore().collection('Users'));
     const users = data.docs.map(doc => doc.data());
     const matchedUser = users.find(
-        user => user.Email === email && user.Password === password);
-    if (matchedUser.Active == true) {
-      if (matchedUser) {
-        navigation.navigate('Home', {
-          userEmail: matchedUser.Email,
-          userName: matchedUser.Name,
-          userNumberOfClasses: matchedUser.NumberOfClasses,
-          userAge: matchedUser.Age,
-        });
-      } else {
-        setErrorMessage('Invalid username or password');
+        user => user.Email === email);
+    if (matchedUser) {  // Check if firebase contains the provided email address. 
+      if (matchedUser.Password === password) {  // Checks if the provided password is correct. 
+        if (matchedUser.Active == true) {  // Checks the active status of the user's account. If suspended, the user won't be granted entry.
+          navigation.navigate('Home', {
+            userEmail: matchedUser.Email,
+            userName: matchedUser.Name,
+            userNumberOfClasses: matchedUser.NumberOfClasses,
+            userAge: matchedUser.Age,
+          });
+        } else {
+          setErrorMessage('Your account is inactive or suspended');
+        }
+      }
+      else {
+        setErrorMessage('Invalid password');
       }
     }
     else {
-      setErrorMessage('Your account is inactive');
+      setErrorMessage('No account was found with that email address');
     }
 
   };

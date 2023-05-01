@@ -5,15 +5,18 @@ import { collection, query, where } from 'firebase/firestore'
 import FetchImage from './FetchImage';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { FindFitnessReps } from './FindFitnessReps';
 
 
 var width = Dimensions.get('window').width //full width of the device
 var height = Dimensions.get('window').height //full height of the device
-
+var numberOfReps = ''; 
 
 const FetchMoves = ({navigation, chosenPage, beltLevel, ageGroup}) => {
     const [fitnessMoves, setFitnessMoves] = useState([]);
     const [url, setUrl] = useState();
+
+    numberOfReps = FindFitnessReps(beltLevel, ageGroup);
     
     useEffect(async () => {
         var movesRef = ''; 
@@ -65,7 +68,7 @@ const FetchMoves = ({navigation, chosenPage, beltLevel, ageGroup}) => {
 
                         onPress={() => navigation.navigate('SelectedMove', {move: item.id, steps: item.Steps})}>     
                         <View style={styles.innerContainer}>
-                            <Text style={styles.itemHeading}>{item.id}</Text>
+                            <Text style={styles.itemHeading}>{numberOfReps} {item.id}</Text>
                             <FetchImage
                                 Class = 'Adults'
                                 Category = {item.Category}
