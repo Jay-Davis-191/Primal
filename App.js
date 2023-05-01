@@ -269,14 +269,16 @@ const HomeScreen = ({navigation, route}) => {
  //will check for the name and the class the user belongs to. 
  //When user closes this page, the notes will be updated in the SQL database. 
 const SelectedMoveScreen = ({navigation, route}) => {
+  React.useEffect(() => 
+    navigation.setOptions({ title : route.params.move }) // Changes title of the ppage to the selected move
+  ), [route.params, navigation]
+
   var steps = route.params.steps.replace(/-/g, '\n-'); 
   //steps = steps.replace('\n-', '-'); 
   steps = steps + '\n'
-
-  navigation.setOptions({ title : route.params.move }) // Changes title of the ppage to the selected move
+  
   return (
     <SafeAreaView style={styles.container}>
-
         <View style={styles.container}>
           <StatusBar style="auto" />
           <FetchVideo 

@@ -16,10 +16,7 @@ export default function FetchImage({Class, Category, SelectedMove, PhotoPath}) {
     useEffect(() => {
         const func = async () => {
             const storage = getStorage();
-            //const reference = ref(storage, '/Images/Adult/Fitness/Pushups.jpg');
-            //path = '/Images/' + Class + '/' + Category + '/' + SelectedMove + '.jpg'
             path = PhotoPath; 
-            //const path = '/Images/Adults/Fitness/Pushups.jpg'; 
             const reference = ref(storage, path);
             await getDownloadURL(reference).then((x) => {
                 setUrl(x);

@@ -1,40 +1,47 @@
-import { View, Text, FlatList, StyleSheet, Pressable } from 'react-native'
+import { View, Text, FlatList, StyleSheet, Pressable, Dimensions } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { firebase } from '../config';
+import { FlashList } from '@shopify/flash-list';
+var Width = Dimensions.get('window').width //full width of the device
+var Height = Dimensions.get('window').height //full width of the device
+
 
 
 const Fetch = () => {
     const [users, setUsers] = useState([]);
     const todoRef = firebase.firestore().collection('Users');
 
-    useEffect(async () => {
-        todoRef
-        .onSnapshot(
-            querySnapshot => {
-                const users = []
-                querySnapshot.forEach((doc) => {
-                    const { Name, Age, Username, Password, NumberOfClasses, Active } = doc.data()
-                    users.push({
-                        id: doc.id,
-                        Name,
-                        Age, 
-                        Username,
-                        Password, 
-                        NumberOfClasses,
-                        Active
+    useEffect(() => {
+        async function retrieveAllUsersData() {
+            todoRef
+            .onSnapshot(
+                querySnapshot => {
+                    const users = []
+                    querySnapshot.forEach((doc) => {
+                        const { Name, Age, Username, Password, NumberOfClasses, Active } = doc.data()
+                        users.push({
+                            id: doc.id,
+                            Name,
+                            Age, 
+                            Username,
+                            Password, 
+                            NumberOfClasses,
+                            Active
+                        })
                     })
-                })
-                setUsers(users)
-            }
-        )
+                    setUsers(users)
+                }
+            )
+        }
+        retrieveAllUsersData();
     }, [])
 
     return (
-        <View style={{ flex:1, marginTop:100}}>
-            <FlatList 
-                style={{height:'100%'}}
+        <View style={{ flex:1, height: Height}}>
+            <FlashList 
                 data={users}
                 numColumns={1}
+                estimatedItemSize={Width}
                 renderItem={({item}) => (
                     <Pressable style={styles.container} >
                         <View style={styles.innerContainer}>

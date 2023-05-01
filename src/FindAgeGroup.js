@@ -12,9 +12,6 @@ function FindAgeGroup(number) {
     const currentDate = retrieveCurrentDate();  
     const DOB = convertDOBToString(number); 
     const timeDifference = calculateTimeDifference(currentDate, DOB); 
-    console.log(currentDate); // prints the current date in the format DD/MM/YYYY
-    console.log(DOB);
-    console.log(timeDifference);
     
     if (timeDifference <= LITTLE_DRAGON_MAX_AGE) {
         return 'Little Dragons'

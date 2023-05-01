@@ -6,9 +6,10 @@ import FetchImage from './FetchImage';
 import { NavigationContainer, StackActions } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { FindFitnessReps } from './FindFitnessReps';
+import { FlashList } from "@shopify/flash-list";
 
 
-var width = Dimensions.get('window').width //full width of the device
+var Width = Dimensions.get('window').width //full width of the device
 var height = Dimensions.get('window').height //full height of the device
 var numberOfReps = ''; 
 
@@ -61,11 +62,11 @@ const FetchMoves = ({navigation, chosenPage, beltLevel, ageGroup}) => {
     }, [])
 
     return (
-        <View style={{ flex:1 }}>
-            <FlatList 
-                style={{width: width}}
+        <View style={{ flex:1, width: Width }}>
+            <FlashList 
                 data={fitnessMoves}
                 numColumns={1}
+                estimatedItemSize={Width}
                 renderItem={({item}) => (
                     <TouchableHighlight 
                         // 2 lines of code below make click invisible. 

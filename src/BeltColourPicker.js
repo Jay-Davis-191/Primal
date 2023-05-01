@@ -38,13 +38,13 @@ const colorMapping = {
 
  
    return (
-     <Picker
+    <Picker
        style={pickerStyle}
        selectedValue={selectedValue}
        onValueChange={handleValueChange}
-     >
-     {pickerData}
-     </Picker>
+    >
+      {pickerData}
+    </Picker>
    );
  };
  
@@ -101,8 +101,6 @@ const colorMapping = {
   else {
     pickerData.push(<Picker.Item value={colour} style={{backgroundColor: colourCapitalized}} />);  
   }
-  
-
  }
 
  export default BeltColourPicker
