@@ -31,7 +31,7 @@ export default function FetchImage({Class, Category, SelectedMove, PhotoPath}) {
     return (
         <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 50}}>
             <Image
-                style={{width:width * 3 / 4, height: height / 5}}
+                style={{width:width * 3 / 4, height: height / 5, borderRadius: 20}} // Rounds the corners of the images of all moves. 
                 source={{ uri: url }}
             />
         </View>

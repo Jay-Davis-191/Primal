@@ -99,7 +99,7 @@ const colorMapping = {
     pickerData.push(<Picker.Item label={colour} value={colour} style={{backgroundColor: 'saddlebrown'}} />);  
   }
   else {
-    pickerData.push(<Picker.Item label={colour} value={colour} style={{backgroundColor: colourCapitalized}} />);  
+    pickerData.push(<Picker.Item value={colour} style={{backgroundColor: colourCapitalized}} />);  
   }
   
 

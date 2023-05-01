@@ -89,7 +89,7 @@ const LoginScreen = () => {
             userEmail: matchedUser.Email,
             userName: matchedUser.Name,
             userNumberOfClasses: matchedUser.NumberOfClasses,
-            userAge: matchedUser.Age,
+            userDOB: matchedUser.DOB,
           });
         } else {
           setErrorMessage('Your account is inactive or suspended');
@@ -156,7 +156,7 @@ const LoginScreen = () => {
 //HomeScreen opens the home page of the app including progress status, gallery and buttons to other screens. 
 //@params route, includes the email of the user which will be used in the WHERE clause for the SQL query to find the user's information. 
 const HomeScreen = ({navigation, route}) => {
-  const ageGroup = FindAgeGroup(route.params.userAge);
+  const ageGroup = FindAgeGroup(route.params.userDOB);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -206,9 +206,6 @@ const HomeScreen = ({navigation, route}) => {
 //-----------------------------------------------------------
 //FitnessScreen includes all appropriate fitness options for the user. 
  const FitnessScreen = ({navigation, route}) => {
-  const beltLevel = FindBeltLevel(route.params.beltColour);
-  //const ageGroup = FindAgeGroup(route.params.age);
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
@@ -229,8 +226,6 @@ const HomeScreen = ({navigation, route}) => {
 //-----------------------------------------------------------
 //StrikingScreen includes all appropriate striking options for the user. 
  const StrikingScreen = ({navigation, route}) => {
-  const beltLevel = FindBeltLevel(route.params.beltColour);
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
@@ -250,9 +245,6 @@ const HomeScreen = ({navigation, route}) => {
 //-----------------------------------------------------------
 //GroundSkillsScreen includes all appropriate ground skills for the user. 
  const GroundSkillsScreen = ({navigation, route}) => {
-  const beltLevel = FindBeltLevel(route.params.beltColour);
-  const level = FindBeltLevel.selectedValue
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
