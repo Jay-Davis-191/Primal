@@ -211,7 +211,6 @@ const HomeScreen = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-    <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <StatusBar style="auto" />
         <Text style={styles.heading}></Text>
@@ -222,7 +221,6 @@ const HomeScreen = ({navigation, route}) => {
           ageGroup={route.params.age}
           />
       </View>
-    </ScrollView>
     </SafeAreaView>
   )
 }
@@ -235,7 +233,6 @@ const HomeScreen = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-    <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <StatusBar style="auto" />
         <Text style={styles.heading}></Text>
@@ -246,7 +243,6 @@ const HomeScreen = ({navigation, route}) => {
           ageGroup={route.params.age}
           />
       </View>
-    </ScrollView>
     </SafeAreaView>
   )
 }
@@ -259,7 +255,6 @@ const HomeScreen = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-    <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <StatusBar style="auto" />
         <Text style={styles.heading}></Text>
@@ -270,7 +265,6 @@ const HomeScreen = ({navigation, route}) => {
           ageGroup={route.params.age}
           />
       </View>
-    </ScrollView>
     </SafeAreaView>
   )
 }
@@ -283,7 +277,6 @@ const HomeScreen = ({navigation, route}) => {
  //will check for the name and the class the user belongs to. 
  //When user closes this page, the notes will be updated in the SQL database. 
 const SelectedMoveScreen = ({navigation, route}) => {
-  const [currentNotes, onChangeNotes] = React.useState('sddofbspidf');
   var steps = route.params.steps.replace(/-/g, '\n-'); 
   //steps = steps.replace('\n-', '-'); 
   steps = steps + '\n'
@@ -291,33 +284,15 @@ const SelectedMoveScreen = ({navigation, route}) => {
   navigation.setOptions({ title : route.params.move }) // Changes title of the ppage to the selected move
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}
-      horizontal={false}
-      >
+
         <View style={styles.container}>
           <StatusBar style="auto" />
           <FetchVideo 
             chosenMove={route.params.move}
             //style={{ width: Width - 20, height: Height / 3, }}
           />
-
           <Text style={styles.selectedMoveText}>{steps}</Text>
-  
-          <TextInput style={styles.selectedMoveText}
-            value={currentNotes}
-            onChangeText={onChangeNotes}
-            placeholder="Notes"
-            keyboardType="default"
-            multiline={true}
-          />
-  
-          <Button
-            title="Save"
-            color='blue'
-            onPress={() => Alert.alert("" + email + " - " + password)}
-          />
         </View>
-      </ScrollView>  
     </SafeAreaView>
   )
 }

@@ -1,7 +1,6 @@
 // Finds the appropriate age group for the logged in user. 
 // @params number, the recorded age of the user taken from firebase firestore. 
-// @return 
-
+// @return the age group the user belongs to. This impacts the fitness reps and what list of curriculums the user can access. 
 
 function FindAgeGroup(number) {  
     const LITTLE_DRAGON_MAX_AGE = 5; 

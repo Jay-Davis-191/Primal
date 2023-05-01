@@ -41,16 +41,16 @@ const colorMapping = {
        selectedValue={selectedValue}
        onValueChange={handleValueChange}
      >
-      <Picker.Item label="White" value="White" />
-      <Picker.Item label="Orange" value="Orange" />
-      <Picker.Item label="Yellow" value="Yellow" />
-      <Picker.Item label="Green" value="Green" />
-      <Picker.Item label="Purple" value="Purple" />
-      <Picker.Item label="Blue" value="Blue" />
-      <Picker.Item label="Brown" value="Brown" />
-      <Picker.Item label="Red" value="Red" />
-      <Picker.Item label="Provisional Black" value="Grey" />
-      <Picker.Item label="Black" value="Black" />
+      <Picker.Item label="White" value="White" style={{backgroundColor: 'white'}} />
+      <Picker.Item label="Orange" value="Orange" style={{backgroundColor: 'orange'}} />
+      <Picker.Item label="Yellow" value="Yellow" style={{backgroundColor: 'yellow'}} />
+      <Picker.Item label="Green" value="Green" style={{backgroundColor: 'green'}} />
+      <Picker.Item label="Purple" value="Purple" style={{backgroundColor: 'purple'}} />
+      <Picker.Item label="Blue" value="Blue" style={{backgroundColor: 'blue'}} />
+      <Picker.Item label="Brown" value="Brown" style={{backgroundColor: 'saddlebrown'}} />
+      <Picker.Item label="Red" value="Red" style={{backgroundColor: 'red'}} />
+      <Picker.Item label="Provisional Black" value="Grey" style={{backgroundColor: 'grey'}} />
+      <Picker.Item label="Black" value="Black" style={{backgroundColor: 'black' }} />
 
      </Picker>
    );

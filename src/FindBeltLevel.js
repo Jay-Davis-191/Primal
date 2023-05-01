@@ -1,3 +1,7 @@
+// Finds the highest belt level/colour the user is currently on and then returns that colour. 
+// @params number, the number of classes the user has done. 
+// @return the colour the user is currently on based on the number of classes they have done. 
+
 function FindBeltLevel(number) {
   const NUMBER_TO_PROVISIONAL_BLACK_BELT = 192 / 24; 
   var x = Math.floor(number / 24); // Divides the total number of classes by the required number of classes for each belt except for provisional-black and black.
