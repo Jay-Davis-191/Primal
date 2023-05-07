@@ -2,6 +2,7 @@ import { View, Text, FlatList, StyleSheet, Pressable, Dimensions } from 'react-n
 import React, { useState, useEffect } from 'react'
 import { firebase } from '../config';
 import { FlashList } from '@shopify/flash-list';
+import { FindAgeGroup } from './FindAgeGroup';
 var Width = Dimensions.get('window').width //full width of the device
 var Height = Dimensions.get('window').height //full width of the device
 
@@ -9,7 +10,7 @@ var Height = Dimensions.get('window').height //full width of the device
 
 const Fetch = () => {
     const [users, setUsers] = useState([]);
-    const todoRef = firebase.firestore().collection('Users');
+    const todoRef = firebase.firestore().collection('Users'); 
 
     useEffect(() => {
         async function retrieveAllUsersData() {
@@ -18,11 +19,12 @@ const Fetch = () => {
                 querySnapshot => {
                     const users = []
                     querySnapshot.forEach((doc) => {
-                        const { Name, Age, Username, Password, NumberOfClasses, Active } = doc.data()
+                        const { Name, DOB, Username, Password, NumberOfClasses, Active } = doc.data()
+                        const DOBCalculated = FindAgeGroup(DOB);
                         users.push({
                             id: doc.id,
                             Name,
-                            Age, 
+                            DOBCalculated, 
                             Username,
                             Password, 
                             NumberOfClasses,
@@ -46,7 +48,7 @@ const Fetch = () => {
                     <Pressable style={styles.container} >
                         <View style={styles.innerContainer}>
                             <Text style={styles.itemHeading}>{item.Name}</Text>
-                            <Text style={styles.itemHeading}>{item.Age}</Text>
+                            <Text style={styles.itemHeading}>{item.DOBCalculated}</Text>
                             <Text style={styles.itemHeading}>{item.Username}</Text>
                             <Text style={styles.itemHeading}>{item.Password}</Text>
                             <Text style={styles.itemHeading}>{item.NumberOfClasses}</Text>

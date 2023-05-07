@@ -21,6 +21,10 @@ import { selectedBeltColour } from './src/BeltColourPicker';
 import { FindBeltLevel } from './src/FindBeltLevel'
 import { FindAgeGroup } from './src/FindAgeGroup'
 
+import AddUser from './src/AddUser';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
+
 const Stack = createNativeStackNavigator();
 var Width = Dimensions.get('window').width //full width of the device
 var Height = Dimensions.get('window').height //full height of the device
@@ -36,6 +40,11 @@ const MyStack = () => {
             name="Login"
             component={LoginScreen}
             options={{title: 'Nexus Login Page'}}
+          />
+          <Stack.Screen 
+            name="SignUp"
+            component={SignUpScreen}
+            options={{title: 'Sign Up Page'}}
           />
           <Stack.Screen 
             name="Home" 
@@ -80,8 +89,9 @@ const LoginScreen = () => {
   const handleLogin = async () => {
     const data = await getDocs(firebase.firestore().collection('Users'));
     const users = data.docs.map(doc => doc.data());
+    const emailLowered = email.toLowerCase(); 
     const matchedUser = users.find(
-        user => user.Email === email);
+        user => String(user.Email).toLowerCase() === emailLowered); // Both emails (firebase and textinput) are changed to lowercase to prevent case-sensitive issues. 
     if (matchedUser) {  // Check if firebase contains the provided email address. 
       if (matchedUser.Password === password) {  // Checks if the provided password is correct. 
         if (matchedUser.Active == true) {  // Checks the active status of the user's account. If suspended, the user won't be granted entry.
@@ -109,7 +119,9 @@ const LoginScreen = () => {
     <View style={styles.container}>
       <ImageBackground source={require('./assets/LoginPageLogo.png')} style={styles.CoverImage}>
           <TouchableHighlight style={styles.SignUpButton}
-            onPress={() => Alert.alert("" + email + " - " + password)}>
+            onPress={() => navigation.navigate('SignUp')} 
+            // onPress={() => Alert.alert("" + email + " - " + password)}
+            >
             <Text style={styles.SignUpText}>SIGN UP</Text>
           </TouchableHighlight>
           <Text style={styles.heading}></Text>
@@ -148,6 +160,104 @@ const LoginScreen = () => {
           </TouchableHighlight>
         </ImageBackground>
       </View>
+  )
+}
+
+
+
+//-----------------------------------------------------------
+//SignUpScreen is where the user creates their account and provides all of their information. 
+//Once the account is found in the database and verified, the user will be moved to the home page.
+const SignUpScreen = () => {
+  const [name, setUserName] = React.useState('');
+  const [email, setUserEmail] = React.useState('');
+  const [password, setUserPassword] = React.useState('');
+  const [financialDetails, setUserFinancialDetails] = React.useState('');
+  const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
+  const [DOB, setUserDOB] = React.useState('DOB');
+  var formattedDate; 
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => { 
+    const year = date.getFullYear(); 
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+    const day = date.getDate().toString().padStart(2, '0'); 
+    formattedDate = String(`${day}/${month}/${year}`); 
+    console.warn(formattedDate); 
+    setUserDOB(formattedDate); 
+    hideDatePicker(); 
+  };
+
+  return (
+    <View style={styles.container}>
+      <StatusBar style="auto" />
+
+      <TextInput style={styles.inputText}
+        value={name}
+        onChangeText={setUserName}
+        placeholder="Full Name"
+        keyboardType='default'
+        color='white'
+        placeholderTextColor='white'
+      />
+
+      <TextInput style={styles.inputText}
+        value={email}
+        onChangeText={setUserEmail}
+        placeholder="Email Address"
+        keyboardType="email-address"
+        color='white'
+        placeholderTextColor='white'
+      />
+
+      <TextInput style={styles.inputText}
+        value={password}
+        onChangeText={setUserPassword}
+        placeholder="Password"
+        keyboardType="visible-password"
+        color='white'
+        placeholderTextColor='white'
+      />
+
+      <TextInput style={styles.inputText}
+        value={financialDetails}
+        onChangeText={setUserFinancialDetails}
+        placeholder="Financial Details"
+        keyboardType='number-pad'
+        color='white'
+        placeholderTextColor='white'
+      />
+
+      <Button title={DOB} onPress={showDatePicker} />
+      <DateTimePickerModal 
+        style={{width: 300}}
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+        minimumDate={new Date('01/01/1900')}
+        maximumDate={new Date()}
+        display='spinner'
+        value={new Date()}
+      />
+
+      <Text style={styles.TextGap}></Text>
+          
+      <TouchableHighlight style={styles.LoginButton}
+        title="Create Account"
+        color= 'green'
+        alignSelf= 'center'
+        onPress={() => AddUser(name, email, password, financialDetails, DOB)} >
+        <Text style={styles.LoginText}>Create Account</Text>
+      </TouchableHighlight>
+    </View>
   )
 }
 
