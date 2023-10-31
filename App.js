@@ -39,17 +39,17 @@ const MyStack = () => {
           <Stack.Screen 
             name="Login"
             component={LoginScreen}
-            options={{title: 'Nexus Login Page'}}
+            options={{title: 'Login'}}
           />
           <Stack.Screen 
             name="SignUp"
             component={SignUpScreen}
-            options={{title: 'Sign Up Page'}}
+            options={{title: 'Sign Up'}}
           />
           <Stack.Screen 
             name="Home" 
             component={HomeScreen}
-            options={{title: 'Nexus Home Page'}}  
+            options={{title: 'Dashboard'}}  
           />
           <Stack.Screen 
             name="Fitness" 
@@ -118,15 +118,7 @@ const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <ImageBackground source={require('./assets/LoginPageLogo.png')} style={styles.CoverImage}>
-          <TouchableHighlight style={styles.SignUpButton}
-            onPress={() => navigation.navigate('SignUp')} 
-            // onPress={() => Alert.alert("" + email + " - " + password)}
-            >
-            <Text style={styles.SignUpText}>SIGN UP</Text>
-          </TouchableHighlight>
-          <Text style={styles.heading}></Text>
-          <Text style={styles.heading}></Text>
-
+        <View style={styles.LoginInputs}>
           <TextInput style={styles.inputText}
             value={email}
             onChangeText={onChangeEmail}
@@ -151,18 +143,32 @@ const LoginScreen = () => {
           <StatusBar style="auto" />
           <Text style={styles.TextGap}></Text>
           
-          <TouchableHighlight style={styles.LoginButton}
-            title="Login"
-            color= 'green'
-            alignSelf= 'center'
-            onPress={handleLogin} >
-            <Text style={styles.LoginText}>LOGIN</Text>
-          </TouchableHighlight>
+
+          <Grid style={styles.LoginPageButtons}>
+            <Col>
+              <TouchableHighlight style={styles.LoginButton}
+                title="Sign Up"
+                color= 'green'
+                alignSelf= 'center'
+                onPress={() => navigation.navigate('SignUp')} >
+                <Text style={styles.LoginText}>SIGN UP</Text>
+              </TouchableHighlight>
+            </Col>
+            <Col>
+              <TouchableHighlight style={styles.LoginButton}
+                  title="Login"
+                  color= 'green'
+                  alignSelf= 'center'
+                  onPress={handleLogin} >
+                  <Text style={styles.LoginText}>LOGIN</Text>
+              </TouchableHighlight>
+            </Col>
+          </Grid>
+        </View>
         </ImageBackground>
       </View>
   )
 }
-
 
 
 //-----------------------------------------------------------
@@ -175,6 +181,7 @@ const SignUpScreen = () => {
   const [financialDetails, setUserFinancialDetails] = React.useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false);
   const [DOB, setUserDOB] = React.useState('DOB');
+  const navigation = useNavigation();
   var formattedDate; 
 
   const showDatePicker = () => {
@@ -190,10 +197,18 @@ const SignUpScreen = () => {
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
     const day = date.getDate().toString().padStart(2, '0'); 
     formattedDate = String(`${day}/${month}/${year}`); 
-    console.warn(formattedDate); 
     setUserDOB(formattedDate); 
     hideDatePicker(); 
   };
+
+  const addUserAndChangePage = () => {
+    var state = AddUser(name, email, password, financialDetails, DOB);
+    if (state == true) {
+      var greeting = String(`Account Created. Welcome ${name}!`); 
+      console.warn(greeting);
+      navigation.navigate('Login'); 
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -249,12 +264,13 @@ const SignUpScreen = () => {
       />
 
       <Text style={styles.TextGap}></Text>
-          
-      <TouchableHighlight style={styles.LoginButton}
+
+
+      <TouchableHighlight style={styles.CreateAccountButton}
         title="Create Account"
         color= 'green'
         alignSelf= 'center'
-        onPress={() => AddUser(name, email, password, financialDetails, DOB)} >
+        onPress={() => addUserAndChangePage()} >
         <Text style={styles.LoginText}>Create Account</Text>
       </TouchableHighlight>
     </View>
@@ -271,12 +287,49 @@ const HomeScreen = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-      <BeltColourPicker
-        navigation={navigation}
-        numberOfClasses={route.params.userNumberOfClasses}
-      />
-      <Fetch/>
-        <Text style={styles.heading}>{route.params.user}</Text>
+      <Text style={styles.TextGap}></Text>
+        <BeltColourPicker
+          navigation={navigation}
+          numberOfClasses={route.params.userNumberOfClasses}
+          name={route.params.Name}
+        />
+  
+        <View style={styles.HomePageContent}> 
+        <View style={styles.stripes}>
+          <View style={styles.colouredStripe} backgroundColor='red'>
+            <Text style={styles.stripeText}>Fitness</Text>
+          </View>
+          <View style={styles.colouredStripe} backgroundColor='blue'>
+            <Text style={styles.stripeText}>Teamwork</Text>
+          </View>
+          <View style={styles.colouredStripe} backgroundColor='green'>
+            <Text style={styles.stripeText}>Honesty</Text>
+          </View>
+          <View style={styles.colouredStripe} backgroundColor='yellow'>
+            <Text style={styles.stripeText}>Confidence</Text>
+          </View>
+        </View>
+
+
+        <View style={styles.progressBarView}>        
+          <Text style={styles.progressText}>Progress</Text>
+          <Text style={styles.progressText}>4 weeks to go</Text> 
+          <View style={styles.progressBar}>
+            <View style={styles.progressBarHalf} />
+          </View>
+        </View>
+
+        <View style={{ alignItems: 'center', marginTop: 30}}>
+          <Text style={{marginBottom: 30, fontSize:20, fontWeight:'bold', color:'white'}}>The ------ Family</Text>
+            <Image
+                style={{marginTop: -20, height: 350, width: 300, borderRadius: 20}} // Rounds the corners of the images of all moves. 
+                source={require('./assets/LoginPageLogo.png')} // This is going to be replaced with a slideshow taken from the client. These pictures will include photos of special events and gatherings.  
+            />
+        </View>
+        <Text style={styles.TextGap}></Text>
+
+        </View>
+
         <StatusBar style="auto" />
       </View>
       <Grid style={styles.footerButtonsView}>
@@ -310,7 +363,6 @@ const HomeScreen = ({navigation, route}) => {
     </SafeAreaView>
   )
 }
-
 
 
 //-----------------------------------------------------------
@@ -352,6 +404,7 @@ const HomeScreen = ({navigation, route}) => {
   )
 }
 
+
 //-----------------------------------------------------------
 //GroundSkillsScreen includes all appropriate ground skills for the user. 
  const GroundSkillsScreen = ({navigation, route}) => {
@@ -370,7 +423,6 @@ const HomeScreen = ({navigation, route}) => {
     </SafeAreaView>
   )
 }
-
 
 
 //-----------------------------------------------------------
@@ -411,8 +463,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  LoginPageButtons: {
+    width: Width * 0.9,
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: 20,
+  }, 
+
   TextGap: {
-    paddingVertical: 20,
+    paddingVertical: 17
   },
 
   CoverImage: {
@@ -421,14 +481,69 @@ const styles = StyleSheet.create({
     width: Width,
   }, 
 
+  HomePageContent: {
+    marginTop: -80,
+  }, 
+
+  stripes: {
+    flex: 1, 
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  
+  stripeText: {
+    fontSize: 20, 
+    color: 'black',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+
+  colouredStripe: {
+    height: 30, 
+    width: Width * 0.9,
+    borderRadius: 10, 
+    marginTop: 10, 
+  }, 
+
   SignUpButton: {
     position: 'absolute',
     right: -10, 
     top: 0, 
-    backgroundColor: 'blue',
+    backgroundColor: 'green',
     padding: 10,
-    paddingRight: 15, 
+    paddingRight: 5, 
+    marginTop: 5, 
+    marginRight: 15, 
     borderRadius: 10,
+  },
+
+  progressBarView: {
+    alignContent:'center',
+    width: Width, 
+    marginTop: 0,
+    marginBottom: 50
+  }, 
+  
+  progressBar: {
+    height: 20, 
+    width: Width * 0.6, 
+    backgroundColor: 'white',
+    alignSelf: 'center',
+    borderRadius: 10,
+  },
+
+  progressBarHalf: {
+    height: 20, 
+    width: Width * 0.5, 
+    alignSelf: 'flex-start',
+    backgroundColor: 'black',
+    borderRadius: 10,
+  },
+
+  progressText: {
+    textAlign: 'center',
+    fontSize: 20, 
+    color: 'white'
   },
 
   SignUpText: {
@@ -436,12 +551,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold', 
   },
 
+  LoginInputs: {
+    marginTop: 100, 
+  }, 
+
   LoginButton: {
     alignSelf: 'center',
     backgroundColor: 'green',
-    paddingVertical: 10,
+    paddingVertical: 15,
     paddingHorizontal: 60,
     borderRadius: 15,
+    position: 'absolute',
   },
 
   LoginText: {
@@ -471,8 +591,18 @@ const styles = StyleSheet.create({
     width: Width * 0.8, 
     alignSelf: 'center', 
     borderColor: 'white', 
+    borderRadius: 7, 
     padding: 8, 
   }, 
+
+  CreateAccountButton: {
+    alignSelf: 'center',
+    backgroundColor: 'green',
+    paddingVertical: 20,
+    paddingHorizontal: 60,
+    borderRadius: 15,
+    marginTop: -20, 
+  },
 
   errorText: {
     fontSize: 15, 

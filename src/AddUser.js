@@ -18,17 +18,7 @@ const AddUser = (name, email, password, financialDetails, DOB) => {
             Password: password,
         })
     }
-
-    // firebase.firestore().collection('Users').add({
-    //     Active: true, 
-    //     DOB: "06/05/2013", 
-    //     Email: 'JohnDoe@gmail.com',
-    //     FinancialDetails: "TBC",
-    //     Name: 'John Doe', 
-    //     NumberOfClasses: 0, 
-    //     Password: 'test123',
-    //     Username: 'JohnDoe123',
-    // })
+    return isValid; 
 };
 
 export default AddUser

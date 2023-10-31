@@ -15,13 +15,13 @@ const colorMapping = {
   Green: 'green',
   Purple: 'purple',
   Blue: 'blue',
-  Brown: 'saddlebrown',
+  Saddlebrown: 'saddlebrown',
   Red: 'red',
   Grey: 'grey',
   Black: 'black',
  };
 
- const BeltColourPicker = ({navigation, numberOfClasses}) => {
+ const BeltColourPicker = ({navigation, numberOfClasses, name}) => {
   let BELT_COLOUR = FindBeltLevel(numberOfClasses);
   applyPickerItems(BELT_COLOUR); 
   const [selectedValue, setSelectedValue] = useState(BELT_COLOUR);
@@ -74,8 +74,8 @@ const colorMapping = {
   if (BELT_COLOUR == 'Blue') {
     return pickerData; 
   }
-  addToPickerData('Brown'); 
-  if (BELT_COLOUR == 'Brown') {
+  addToPickerData('Saddlebrown'); 
+  if (BELT_COLOUR == 'Saddlebrown') {
     return pickerData; 
   }
   addToPickerData('Red'); 
@@ -95,12 +95,7 @@ const colorMapping = {
  const addToPickerData = (colour) => {
   let beltColourAsString = String(colour); 
   let colourCapitalized = beltColourAsString.toLowerCase();
-  if (colour == 'Brown') {
-    pickerData.push(<Picker.Item label={colour} value={colour} style={{backgroundColor: 'saddlebrown'}} />);  
-  }
-  else {
-    pickerData.push(<Picker.Item value={colour} style={{backgroundColor: colourCapitalized}} />);  
-  }
+  pickerData.push(<Picker.Item value={colour} style={{backgroundColor: colourCapitalized}} />);  
  }
 
  export default BeltColourPicker
