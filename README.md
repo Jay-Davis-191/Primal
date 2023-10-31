@@ -35,6 +35,11 @@ The features implemented in the app to draw in that target audience include:
 ## How to run
 1. Open the app with Visual Studio.
 2. Open App.js and select run with Android or iOS emulator.
+3. There are multiple accounts to try, but I would recommend the accounts below:
+a. Jay Davis (Black Belt). Email: test@gmail.com, Password: 123
+b. Test 2 (Green Belt). Email: test2@gmail.com, Password: test123
+
+Both of these accounts will show how the app differs depending on your belt level, thus encouraging the user to continue using the app to gain more content. <b>Please be aware that the development of the app has been halted until further notice from the client so not all videos and images will be available. You will find no videos or images under the Striking Skills page as the client specified to leave this page last. You will find the most content by changing the belt colour to Green (as Test 2), or Red or Black (as Jay Davis). If you change the belt colour to gray as Jay Davis, it will show all moves (except for Black Belt) under their appropriate page as this was a requirement from the client when the user selects the gray belt-level. You will not find any videos for the ground skill moves as this stage of the app was the last phase presented to the client before any further development could be done. 
 
 ## Contributions 
 This project was solely programmed by me and planned with my silent business partner. 
