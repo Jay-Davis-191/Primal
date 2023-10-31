@@ -372,7 +372,7 @@ const HomeScreen = ({navigation, route}) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <StatusBar style="auto" />
-        <Text style={styles.heading}></Text>
+        <Text style={styles.TextGap}></Text>
         <FetchMoves 
           navigation={navigation}
           chosenPage="Fitness"
@@ -392,7 +392,7 @@ const HomeScreen = ({navigation, route}) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <StatusBar style="auto" />
-        <Text style={styles.heading}></Text>
+        <Text style={styles.TextGap}></Text>
         <FetchMoves 
           navigation={navigation}
           chosenPage="Striking"
@@ -412,7 +412,7 @@ const HomeScreen = ({navigation, route}) => {
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <StatusBar style="auto" />
-        <Text style={styles.heading}></Text>
+        <Text style={styles.TextGap}></Text>
         <FetchMoves 
           navigation={navigation}
           chosenPage="Ground Skills"
@@ -448,6 +448,11 @@ const SelectedMoveScreen = ({navigation, route}) => {
             //style={{ width: Width - 20, height: Height / 3, }}
           />
           <Text style={styles.selectedMoveText}>{steps}</Text>
+          <TextInput
+            style={styles.selectedMoveText}
+            placeholder="Add your own notes here"
+            color='white'
+            placeholderTextColor='white'/>
         </View>
     </SafeAreaView>
   )
@@ -637,10 +642,13 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     borderWidth: 2, 
     borderColor: '#e5e5e5', 
+    borderRadius: 20,
     color: 'white',
     padding: 8,
     textAlign: 'left',
     textAlignVertical: 'top',
+    marginTop: 20, 
+    marginBottom: 20,
   }, 
 
 });
